@@ -1,38 +1,8 @@
 {
 	"properties": {
-		"brand": {
+		"scalar": {
 			"type": "text",
-			"index": false,
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
-		"category": {
-			"type": "text",
-			"index": false,
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
-		"color": {
-			"type": "text",
-			"index": false,
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
-		},
-		"country": {
-			"type": "text",
-			"index": false,
+			"index": true,
 			"fields": {
 				"keyword": {
 					"type": "keyword",
@@ -53,28 +23,6 @@
 		},
 		"id": {
 			"type": "long"
-		},
-		"mutate": {
-			"type": "long",
-			"index": false
-		},
-		"review": {
-			"type": "float",
-			"index": false
-		},
-		"size": {
-			"type": "long",
-			"index": false
-		},
-		"type": {
-			"type": "text",
-			"index": false,
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
-				}
-			}
 		}
 	}
 }

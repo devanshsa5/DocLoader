@@ -180,6 +180,9 @@ public class SIFTLoader {
         Option esServer = new Option("esServer", "elastic", true, "ElasticSearch cluster");
         options.addOption(esServer);
 
+        Option selectivity = new Option("selectivity", "elastic", true, "ElasticSearch selectivity dataset");
+        options.addOption(selectivity);
+
         Option esUser = new Option("esUser", "elastic", true, "ElasticSearch user");
         options.addOption(esUser);
 
@@ -235,6 +238,7 @@ public class SIFTLoader {
         }
 
         int[] steps = new int[] {0, 1000000, 2000000, 5000000, 10000000, 20000000, 50000000, 100000000, 200000000, 500000000, 1000000000};
+        int selected_Data = Integer.parseInt(cmd.getOptionValue("selectivity", "0"));
         int poolSize = Integer.parseInt(cmd.getOptionValue("workers", "10"));
         int start_offset = 0, end_offset = 0;
         if(Integer.parseInt(cmd.getOptionValue("cr", "0"))>0) {
@@ -271,7 +275,7 @@ public class SIFTLoader {
                         Boolean.parseBoolean(cmd.getOptionValue("base64", "false")),
                         cmd.getOptionValue("mutate_field",""),
                         Integer.parseInt(cmd.getOptionValue("mutation_timeout","0")),
-                        siftFileName);
+                        siftFileName, selected_Data);
                 HashMap<String, Number> dr = new HashMap<String, Number>();
                 dr.put(DRConstants.create_s, start + step * i);
                 dr.put(DRConstants.create_e, start + step * (i+1));

@@ -89,77 +89,79 @@ public class siftBigANN {
             }
         }
 
-        if(ws.dr.create_s >= 0 && ws.dr.create_e <= 1000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 5, "Green",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 5, "Green",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 1000000 && ws.dr.create_e <= 2000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 6, "Green",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 6, "Green",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 2000000 && ws.dr.create_e <= 5000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 7, "Red",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 7, "Red",
-                        "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 5000000 && ws.dr.create_e <= 10000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 8, "Blue",
-                        "Adidas", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 8, "Blue",
-                        "Adidas", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 10000000 && ws.dr.create_e <= 20000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 9, "Purple",
-                        "Puma", "Canada", "Shoes", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 9, "Purple",
-                        "Puma", "Canada", "Shoes", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 20000000 && ws.dr.create_e <= 50000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 10, "Pink",
-                        "Asics", "Australia", "Jeans", "Casual", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 10, "Pink",
-                        "Asics", "Australia", "Jeans", "Casual", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 50000000 && ws.dr.create_e <= 100000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 11, "Yellow",
-                        "Brook", "England", "Shirt", "Formal", 1.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 11, "Yellow",
-                        "Brook", "England", "Shirt", "Formal", 1.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 100000000 && ws.dr.create_e <= 200000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 12, "Brown",
-                        "Hoka", "India", "Shorts", "Sports", 2.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 12, "Brown",
-                        "Hoka", "India", "Shorts", "Sports", 2.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 200000000 && ws.dr.create_e <= 500000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 13, "Magenta",
-                        "New Balance", "Mexico", "Bottoms", "Sneakers", 5.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 13, "Magenta",
-                        "New Balance", "Mexico", "Bottoms", "Sneakers", 5.0f, this.ws.mutated);
-        if(ws.dr.create_s >= 500000000 && ws.dr.create_e <= 1000000000)
-            if(this.ws.base64)
-                return new Product2(id, convertToBase64Bytes(vector), 14, "Indigo",
-                        "Vans", "France", "Top", "Sandals", 10.0f, this.ws.mutated);
-            else
-                return new Product1(id, vector, 14, "Indigo",
-                        "Vans", "France", "Top", "Sandals", 10.0f, this.ws.mutated);
-        return null;
+        if(ws.dr.create_e <= ws.selectivityInteger)
+            return new Product3(id, vector, "eligible");
+        else
+            return new Product3(id, vector, "ineligible");
+        // if(ws.dr.create_s >= 0 && ws.dr.create_e <= 10000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 5, "Green",
+        //                 "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product3(id, vector, "eligible");
+        // if(ws.dr.create_s >= 10000000 && ws.dr.create_e <= 2000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 6, "Green",
+        //                 "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 6, "Green",
+        //                 "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 2000000 && ws.dr.create_e <= 5000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 7, "Red",
+        //                 "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 7, "Red",
+        //                 "Nike", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 5000000 && ws.dr.create_e <= 10000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 8, "Blue",
+        //                 "Adidas", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 8, "Blue",
+        //                 "Adidas", "USA", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 10000000 && ws.dr.create_e <= 20000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 9, "Purple",
+        //                 "Puma", "Canada", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 9, "Purple",
+        //                 "Puma", "Canada", "Shoes", "Casual", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 20000000 && ws.dr.create_e <= 50000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 10, "Pink",
+        //                 "Asics", "Australia", "Jeans", "Casual", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 10, "Pink",
+        //                 "Asics", "Australia", "Jeans", "Casual", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 50000000 && ws.dr.create_e <= 100000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 11, "Yellow",
+        //                 "Brook", "England", "Shirt", "Formal", 1.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 11, "Yellow",
+        //                 "Brook", "England", "Shirt", "Formal", 1.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 100000000 && ws.dr.create_e <= 200000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 12, "Brown",
+        //                 "Hoka", "India", "Shorts", "Sports", 2.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 12, "Brown",
+        //                 "Hoka", "India", "Shorts", "Sports", 2.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 200000000 && ws.dr.create_e <= 500000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 13, "Magenta",
+        //                 "New Balance", "Mexico", "Bottoms", "Sneakers", 5.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 13, "Magenta",
+        //                 "New Balance", "Mexico", "Bottoms", "Sneakers", 5.0f, this.ws.mutated);
+        // if(ws.dr.create_s >= 500000000 && ws.dr.create_e <= 1000000000)
+        //     if(this.ws.base64)
+        //         return new Product2(id, convertToBase64Bytes(vector), 14, "Indigo",
+        //                 "Vans", "France", "Top", "Sandals", 10.0f, this.ws.mutated);
+        //     else
+        //         return new Product1(id, vector, 14, "Indigo",
+        //                 "Vans", "France", "Top", "Sandals", 10.0f, this.ws.mutated);
     }
     
 
@@ -292,6 +294,51 @@ public class siftBigANN {
         public void setReview(Float review) {
             this.review = review;
         }
+    }
+
+    public class Product3 {
+        @JsonProperty
+        private int id;
+        @JsonProperty
+        private float[] emb;
+        @JsonProperty
+        private String brand;
+
+        @JsonCreator
+        public
+        Product3(
+                @JsonProperty("id")int id,
+                @JsonProperty("emb") float[] vector,
+                @JsonProperty("scalar") String brand){
+            this.id = id;
+            this.emb = vector;
+            this.brand = brand;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+        
+        public float[] getEmbedding() {
+            return emb;
+        }
+
+        public void setEmbedding(float[] emb) {
+            this.emb = emb;
+        }
+
+        public String getBrand() {
+            return this.brand;
+        }
+
+        public void setBrand(String brand) {
+            this.brand = brand;
+        }
+
     }
 
     public class Product2 {
