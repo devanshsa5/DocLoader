@@ -300,7 +300,7 @@ public class siftBigANN {
         @JsonProperty
         private int id;
         @JsonProperty
-        private float[] emb;
+        private float[] embedding;
         @JsonProperty
         private String brand;
 
@@ -308,10 +308,10 @@ public class siftBigANN {
         public
         Product3(
                 @JsonProperty("id")int id,
-                @JsonProperty("emb") float[] vector,
-                @JsonProperty("scalar") String brand){
+                @JsonProperty("embedding") float[] vector,
+                @JsonProperty("brand") String brand){
             this.id = id;
-            this.emb = vector;
+            this.embedding = vector;
             this.brand = brand;
         }
 
@@ -324,11 +324,11 @@ public class siftBigANN {
         }
         
         public float[] getEmbedding() {
-            return emb;
+            return embedding;
         }
 
-        public void setEmbedding(float[] emb) {
-            this.emb = emb;
+        public void setEmbedding(float[] embedding) {
+            this.embedding = embedding;
         }
 
         public String getBrand() {

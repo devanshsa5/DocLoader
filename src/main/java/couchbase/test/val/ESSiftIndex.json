@@ -1,6 +1,6 @@
 {
 	"properties": {
-		"scalar": {
+		"brand": {
 			"type": "text",
 			"index": true,
 			"fields": {
