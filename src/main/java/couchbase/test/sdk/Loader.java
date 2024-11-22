@@ -21,6 +21,7 @@ import couchbase.test.docgen.WorkLoadSettings;
 import couchbase.test.loadgen.WorkLoadGenerate;
 import couchbase.test.taskmanager.TaskManager;
 import elasticsearch.EsClient;
+import milvus.MClient;
 
 public class Loader {
     static Logger logger = LogManager.getLogger(Loader.class);
@@ -152,8 +153,26 @@ public class Loader {
         Option elastic = new Option("elastic", "elastic", true, "Flag to insert data in ElasticSearch cluster");
         options.addOption(elastic);
 
+        Option milvus = new Option("milvus", "milvus", true, "Flag to insert data in Milvus cluster");
+        options.addOption(milvus);
+
         Option esServer = new Option("esServer", "elastic", true, "ElasticSearch cluster");
         options.addOption(esServer);
+
+        Option mserver = new Option("mserver", "milvus", true, "Milvus cluster");
+        options.addOption(mserver);
+
+        Option mUser = new Option("mUser", "milvus", true, "Milvus user");
+        options.addOption(mUser);
+
+        Option mPwd = new Option("mPwd", "milvus", true, "Milvus password");
+        options.addOption(mPwd);
+
+        Option mAPIKey = new Option("mAPIKey", "milvus", true, "Milvus APIKey");
+        options.addOption(mAPIKey);
+
+        Option mSimilarity = new Option("mSimilarity", "milvus", true, "Milvus esSimilarity");
+        options.addOption(mSimilarity);
 
         Option esUser = new Option("esUser", "elastic", true, "ElasticSearch user");
         options.addOption(esUser);
@@ -232,6 +251,7 @@ public class Loader {
                 Boolean.parseBoolean(cmd.getOptionValue("deleted", "false")),
                 Integer.parseInt(cmd.getOptionValue("mutate", "0")),
                 Boolean.parseBoolean(cmd.getOptionValue("elastic", "false")),
+                Boolean.parseBoolean(cmd.getOptionValue("milvus", "false")),
                 cmd.getOptionValue("model", "sentence-transformers/paraphrase-MiniLM-L3-v2"),
                 Boolean.parseBoolean(cmd.getOptionValue("mockVector", "false")),
                 Integer.parseInt(cmd.getOptionValue("dim", "0")),
@@ -266,13 +286,19 @@ public class Loader {
         SDKClient client = new SDKClient(master, cmd.getOptionValue("bucket"), cmd.getOptionValue("scope", "_default"),
                 cmd.getOptionValue("collection", "_default"));
         EsClient esClient = null;
+        MClient mClient = null;
         if (ws.elastic) {
             if (cmd.getOptionValue(esAPIKey.getOpt()) != null)
                 esClient = new EsClient(cmd.getOptionValue(esServer.getOpt()), cmd.getOptionValue(esAPIKey.getOpt()));
             esClient.initializeSDK();
             esClient.deleteESIndex(cmd.getOptionValue("collection", "_default").replace("_", ""));
+            try{
             esClient.createESIndex(cmd.getOptionValue("collection", "_default").replace("_", ""), cmd.getOptionValue(esSimilarity.getOpt(), "l2_norm"), null);
-        }
+            }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         try {
             client.initialiseSDK();
         } catch (Exception e) {
@@ -284,7 +310,7 @@ public class Loader {
                 boolean trackFailures = false;
                 if (Integer.parseInt(cmd.getOptionValue("retry", "0")) > 0)
                     trackFailures = true;
-                tm.submit(new WorkLoadGenerate(th_name, dg, client, esClient, cmd.getOptionValue("durability", "NONE"),
+                tm.submit(new WorkLoadGenerate(th_name, dg, client, esClient, mClient, cmd.getOptionValue("durability", "NONE"),
                         Integer.parseInt(cmd.getOptionValue("maxTTL", "0")),
                         cmd.getOptionValue("maxTTLUnit", "seconds"), trackFailures,
                         Integer.parseInt(cmd.getOptionValue("retry", "0")), null));

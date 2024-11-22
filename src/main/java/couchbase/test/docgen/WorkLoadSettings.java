@@ -39,6 +39,7 @@ public class WorkLoadSettings extends WorkLoadBase {
     public Boolean commit_transaction;
     public Boolean rollback_transaction;
     public boolean elastic;
+    public boolean milvus;
     public String model;
     public boolean mockVector;
     public int dim;
@@ -51,7 +52,7 @@ public class WorkLoadSettings extends WorkLoadBase {
             int workers, int ops, String loadType,
             String keyType, String valueType,
             boolean validate, boolean gtm, boolean deleted, int mutated,
-            boolean elastic, String model, boolean mockVector, int dim, boolean base64,
+            boolean elastic, boolean milvus, String model, boolean mockVector, int dim, boolean base64,
             String mutate_field, Integer mutation_timeout,
             String baseVectorsFilePath) {
         super();
@@ -73,6 +74,7 @@ public class WorkLoadSettings extends WorkLoadBase {
         this.valueType = valueType;
         this.keyType = keyType;
         this.elastic = elastic;
+        this.milvus = milvus;
         this.model = model;
         this.mockVector = mockVector;
         this.dim = dim;
@@ -113,7 +115,7 @@ public class WorkLoadSettings extends WorkLoadBase {
             int workers, int ops, String loadType,
             String keyType, String valueType,
             boolean validate, boolean gtm, boolean deleted, int mutated,
-            boolean elastic, String model, boolean mockVector, int dim, boolean base64,
+            boolean elastic, boolean milvus, String model, boolean mockVector, int dim, boolean base64,
             String mutate_field, Integer mutation_timeout) {
         super();
         this.keyPrefix = keyPrefix;
@@ -134,6 +136,7 @@ public class WorkLoadSettings extends WorkLoadBase {
         this.valueType = valueType;
         this.keyType = keyType;
         this.elastic = elastic;
+        this.milvus = milvus;
         this.model = model;
         this.mockVector = mockVector;
         this.dim = dim;

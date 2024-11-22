@@ -40,6 +40,7 @@ import jakarta.json.JsonObject;
 import reactor.util.function.Tuple2;
 
 
+
 public class EsClient {
 	String serverUrl = "http://localhost:9200";
 	String apiKey = null;

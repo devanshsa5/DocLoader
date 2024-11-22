@@ -33,6 +33,7 @@ import couchbase.test.sdk.SDKClient;
 import couchbase.test.sdk.SDKClientPool;
 import couchbase.test.taskmanager.Task;
 import elasticsearch.EsClient;
+import milvus.MClient;
 import reactor.util.function.Tuple2;
 
 public class WorkLoadGenerate extends Task{
@@ -52,6 +53,7 @@ public class WorkLoadGenerate extends Task{
     public RemoveOptions removeOptions;
     public GetOptions getOptions;
     public EsClient esClient = null;
+    public MClient mClient = null;
     private SDKClientPool sdkClientPool;
     static Logger logger = LogManager.getLogger(WorkLoadGenerate.class);
     public String bucket_name;
@@ -92,13 +94,14 @@ public class WorkLoadGenerate extends Task{
         this.retryStrategy = retryStrategy;
     }
 
-    public WorkLoadGenerate(String taskName, DocumentGenerator dg, SDKClient client, EsClient esClient,
+    public WorkLoadGenerate(String taskName, DocumentGenerator dg, SDKClient client, EsClient esClient, MClient mClient,
             String durability, int exp, String exp_unit, boolean trackFailures, int retryTimes, String retryStrategy) {
         super(taskName);
         this.dg = dg;
         this.docops = new DocOps();
         this.sdk = client;
         this.esClient = esClient;
+        this.mClient = mClient;
         this.durability = durability;
         this.trackFailures = trackFailures;
         this.retryTimes = retryTimes;
@@ -107,13 +110,14 @@ public class WorkLoadGenerate extends Task{
         this.retryStrategy = retryStrategy;
     }
 
-    public WorkLoadGenerate(String taskName, DocumentGenerator dg, SDKClientPool clientPool, EsClient esClient,
+    public WorkLoadGenerate(String taskName, DocumentGenerator dg, SDKClientPool clientPool, EsClient esClient, MClient mClient,
             String durability, int exp, String exp_unit, boolean trackFailures, int retryTimes, String retryStrategy) {
         super(taskName);
         this.dg = dg;
         this.docops = new DocOps();
         this.sdkClientPool = clientPool;
         this.esClient = esClient;
+        this.mClient = mClient;
         this.durability = durability;
         this.trackFailures = trackFailures;
         this.retryTimes = retryTimes;
@@ -181,6 +185,9 @@ public class WorkLoadGenerate extends Task{
                     if(this.dg.ws.elastic) {
                         this.esClient.insertDocs(this.collection.replace("_", ""), docs);
                     }
+                    if(this.dg.ws.milvus) {
+                        this.mClient.insert_docs(this.collection, docs);
+                    }
                     List<Result> result = new ArrayList<Result>();
                     if(this.sdk != null)
                         result = docops.bulkInsert(this.sdk.connection, docs, setOptions);
@@ -199,6 +206,9 @@ public class WorkLoadGenerate extends Task{
                     flag = true;
                     if(this.dg.ws.elastic) {
                         this.esClient.insertDocs(this.collection.replace("_", ""), docs);
+                    }
+                    if(this.dg.ws.milvus) {
+                        this.mClient.insert_docs(this.collection, docs);
                     }
                     List<Result> result = new ArrayList<Result>();
                     if(this.sdk != null)
