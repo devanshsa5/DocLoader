@@ -5,11 +5,16 @@ import reactor.util.function.Tuple2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import couchbase.test.sdk.SIFTLoader;
+
 import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import io.milvus.client.MilvusClient;
 import io.milvus.client.MilvusServiceClient;
@@ -19,6 +24,8 @@ import io.milvus.param.R;
 
 
 public class MClient {
+
+    static Logger logger = LogManager.getLogger(SIFTLoader.class);
 
     String serverUrl = "http://localhost:19530";
 	String apiKey = null;
@@ -42,6 +49,7 @@ public class MClient {
     private static final String COLLECTION_NAME = "demo3"; // Example placeholder
 
     public void insert_docs(String indexName, List<Tuple2<String, Object>> docs){
+        logger.info("Inserting milvus documents");
     String fileName = "data.json";
     try (FileWriter writer = new FileWriter(fileName)) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

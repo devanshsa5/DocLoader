@@ -255,7 +255,7 @@ public class SIFTLoader {
 
         MClient mClient = null;
         if (Boolean.parseBoolean(cmd.getOptionValue("milvus", "false"))) {
-            if (cmd.getOptionValue(mAPIKey.getOpt()) != null)
+            // if (cmd.getOptionValue(mAPIKey.getOpt()) != null)
                 mClient = new MClient(cmd.getOptionValue(mServer.getOpt()), cmd.getOptionValue(mAPIKey.getOpt()));
             mClient.connect();
         }
