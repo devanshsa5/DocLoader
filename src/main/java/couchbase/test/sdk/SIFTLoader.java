@@ -29,6 +29,7 @@ import couchbase.test.loadgen.WorkLoadGenerate;
 import couchbase.test.taskmanager.Task;
 import couchbase.test.taskmanager.TaskManager;
 import elasticsearch.EsClient;
+import milvus.MClient;
 import utils.common.FileDownload;
 
 public class SIFTLoader {
@@ -192,6 +193,24 @@ public class SIFTLoader {
         Option esSimilarity = new Option("esSimilarity", "elastic", true, "ElasticSearch esSimilarity");
         options.addOption(esSimilarity);
 
+        Option milvus = new Option("milvus", "milvus", true, "Flag to insert data in Milvus cluster");
+        options.addOption(milvus);
+
+        Option mServer = new Option("mServer", "milvus", true, "Milvus cluster");
+        options.addOption(mServer);
+
+        Option mUser = new Option("mUser", "milvus", true, "Milvus user");
+        options.addOption(mUser);
+
+        Option mPwd = new Option("mPwd", "milvus", true, "Milvus password");
+        options.addOption(mPwd);
+
+        Option mAPIKey = new Option("mAPIKey", "milvus", true, "Milvus APIKey");
+        options.addOption(mAPIKey);
+
+        Option mSimilarity = new Option("mSimilarity", "milvus", true, "Milvus esSimilarity");
+        options.addOption(mSimilarity);
+
         Option skipCB = new Option("skipCB", "skipCB", true, "Skip loading data into Couchbase");
         options.addOption(skipCB);
 
@@ -234,6 +253,13 @@ public class SIFTLoader {
             esClient.createESIndex(cmd.getOptionValue("collection", "_default").replace("_", ""), cmd.getOptionValue(esSimilarity.getOpt(), "l2_norm"), null);
         }
 
+        MClient mClient = null;
+        if (Boolean.parseBoolean(cmd.getOptionValue("milvus", "false"))) {
+            if (cmd.getOptionValue(mAPIKey.getOpt()) != null)
+                mClient = new MClient(cmd.getOptionValue(mServer.getOpt()), cmd.getOptionValue(mAPIKey.getOpt()));
+            mClient.connect();
+        }
+
         int[] steps = new int[] {0, 1000000, 2000000, 5000000, 10000000, 20000000, 50000000, 100000000, 200000000, 500000000, 1000000000};
         int poolSize = Integer.parseInt(cmd.getOptionValue("workers", "10"));
         int start_offset = 0, end_offset = 0;
@@ -265,6 +291,7 @@ public class SIFTLoader {
                         Boolean.parseBoolean(cmd.getOptionValue("deleted", "false")),
                         Integer.parseInt(cmd.getOptionValue("mutate", "0")),
                         Boolean.parseBoolean(cmd.getOptionValue("elastic", "false")),
+                        Boolean.parseBoolean(cmd.getOptionValue("milvus", "false")),
                         cmd.getOptionValue("model", "sentence-transformers/paraphrase-MiniLM-L3-v2"),
                         Boolean.parseBoolean(cmd.getOptionValue("mockVector", "false")),
                         Integer.parseInt(cmd.getOptionValue("dim", "0")),
@@ -301,7 +328,7 @@ public class SIFTLoader {
                     boolean trackFailures = false;
                     if (Integer.parseInt(cmd.getOptionValue("retry", "0")) > 0)
                         trackFailures = true;
-                    WorkLoadGenerate wlg = new WorkLoadGenerate(th_name, dg, clientPool, esClient, cmd.getOptionValue("durability", "NONE"),
+                    WorkLoadGenerate wlg = new WorkLoadGenerate(th_name, dg, clientPool, esClient, mClient, cmd.getOptionValue("durability", "NONE"),
                             Integer.parseInt(cmd.getOptionValue("maxTTL", "0")),
                             cmd.getOptionValue("maxTTLUnit", "seconds"), trackFailures,
                             Integer.parseInt(cmd.getOptionValue("retry", "0")), null);
