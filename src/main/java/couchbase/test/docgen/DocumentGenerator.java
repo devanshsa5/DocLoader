@@ -108,6 +108,8 @@ abstract class KVGenerator{
     }
 
     public boolean has_next_update() {
+        System.out.println("this.ws.dr.updateItr.get()" + this.ws.dr.updateItr.get());
+        System.out.println("this.ws.dr.update_e" + this.ws.dr.update_e);
         if (this.ws.dr.updateItr.get() < this.ws.dr.update_e)
             return true;
         if (this.keyInstance.getSimpleName() == CircularKey.class.getSimpleName() || TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())-startTime<ws.mutation_timeout) {
@@ -235,10 +237,13 @@ public class DocumentGenerator extends KVGenerator{
     public List<Tuple2<String, Object>> nextUpdateBatch() {
         List<Tuple2<String, Object>> docs = new ArrayList<Tuple2<String,Object>>();
         int count = 0;
+        System.out.println("this.has_next_update()" + this.has_next_update());
+        System.out.println("ws.batchSize*ws.updates" + ws.batchSize*ws.updates);
         while (this.has_next_update() && count<ws.batchSize*ws.updates/100) {
             docs.add(this.nextUpdate());
             count += 1;
         }
+        System.out.println("docs.size from nextupdatebatch" + docs);
         return docs;
     }
 

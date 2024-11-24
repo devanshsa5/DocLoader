@@ -165,6 +165,7 @@ public class WorkLoadGenerate extends Task{
         boolean flag = false;
         Instant trackFailureTime_start = Instant.now();
         while(true) {
+            logger.info("inside while " + this.taskName);
             if (this.sdkClientPool != null)
                 this.sdk = this.sdkClientPool.get_client_for_bucket(this.bucket_name, this.scope, this.collection);
             Instant trackFailureTime_end = Instant.now();
@@ -174,19 +175,24 @@ public class WorkLoadGenerate extends Task{
                     System.out.println("Failed mutations count so far: " + optype.getKey() + " == " + optype.getValue().size());
                 trackFailureTime_start = Instant.now();
             }
+            logger.info(" Inside while outside create");
             Instant start = Instant.now();
             if(dg.ws.creates > 0) {
+                logger.info(" Inside create ");
                 // Instant st = Instant.now();
                 List<Tuple2<String, Object>> docs = dg.nextInsertBatch();
                 // Instant en = Instant.now();
                 // System.out.println(this.taskName + " Time Taken to generate " + docs.size() + "docs: " + Duration.between(st, en).toMillis() + "ms");
                 if (docs.size()>0) {
+                    logger.info(" docs > 0 ");
                     flag = true;
                     if(this.dg.ws.elastic) {
+                        logger.info(" Inserting elastic docs");
                         this.esClient.insertDocs(this.collection.replace("_", ""), docs);
                     }
                     if(this.dg.ws.milvus) {
-                        this.mClient.insert_docs(this.collection, docs);
+                        logger.info(" Inserting milvus docs");
+                        this.mClient.insertDocs(this.collection, docs);
                     }
                     List<Result> result = new ArrayList<Result>();
                     if(this.sdk != null)
@@ -201,14 +207,18 @@ public class WorkLoadGenerate extends Task{
                 }
             }
             if(dg.ws.updates > 0) {
+                logger.info(" Inside update ");
                 List<Tuple2<String, Object>> docs = dg.nextUpdateBatch();
+                logger.info(" docs.size " + docs.size());
                 if (docs.size()>0) {
+                    logger.info(" docs.size " + docs.size());
                     flag = true;
                     if(this.dg.ws.elastic) {
                         this.esClient.insertDocs(this.collection.replace("_", ""), docs);
                     }
                     if(this.dg.ws.milvus) {
-                        this.mClient.insert_docs(this.collection, docs);
+                        logger.info(" Running Milvus");
+                        this.mClient.insertDocs(this.collection, docs);
                     }
                     List<Result> result = new ArrayList<Result>();
                     if(this.sdk != null)

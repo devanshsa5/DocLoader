@@ -803,6 +803,11 @@ public class Vector {
             this.embedding = vector;
         }
 
+        @Override
+        public String toString() {
+            return "Product1{field1=" + productID + ", field2=" + embedding + "}";
+        }
+
         public String getProductID() {
             return this.productID;
         }
