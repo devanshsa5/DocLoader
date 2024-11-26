@@ -91,8 +91,8 @@ public class MClient {
             }
         }
 
-        System.out.println("ids" + ids);
-        System.out.println("vectors" + vectors);
+        // System.out.println("ids" + ids);
+        // System.out.println("vectors" + vectors);
         
         // Insert data by columns
         // List<InsertParam.Field> fields = new ArrayList<>();
@@ -128,7 +128,7 @@ public class MClient {
         if (response.getStatus() != R.Status.Success.getCode()) {
             System.out.println("Row-wise insert failed: " + response.getMessage());
         } else {
-            System.out.println("Rows inserted successfully.");
+            System.out.println("Rows inserted successfully." );
         }
 
 

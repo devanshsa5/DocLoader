@@ -108,8 +108,8 @@ abstract class KVGenerator{
     }
 
     public boolean has_next_update() {
-        System.out.println("this.ws.dr.updateItr.get()" + this.ws.dr.updateItr.get());
-        System.out.println("this.ws.dr.update_e" + this.ws.dr.update_e);
+        // System.out.println("this.ws.dr.updateItr.get()" + this.ws.dr.updateItr.get());
+        // System.out.println("this.ws.dr.update_e" + this.ws.dr.update_e);
         if (this.ws.dr.updateItr.get() < this.ws.dr.update_e)
             return true;
         if (this.keyInstance.getSimpleName() == CircularKey.class.getSimpleName() || TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())-startTime<ws.mutation_timeout) {

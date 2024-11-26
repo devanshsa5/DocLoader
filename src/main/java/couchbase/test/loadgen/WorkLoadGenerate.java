@@ -209,9 +209,8 @@ public class WorkLoadGenerate extends Task{
             if(dg.ws.updates > 0) {
                 logger.info(" Inside update ");
                 List<Tuple2<String, Object>> docs = dg.nextUpdateBatch();
-                logger.info(" docs.size " + docs.size());
+                // logger.info(" docs.size " + docs.size());
                 if (docs.size()>0) {
-                    logger.info(" docs.size " + docs.size());
                     flag = true;
                     if(this.dg.ws.elastic) {
                         this.esClient.insertDocs(this.collection.replace("_", ""), docs);
