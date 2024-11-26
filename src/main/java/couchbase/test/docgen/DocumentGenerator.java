@@ -243,7 +243,6 @@ public class DocumentGenerator extends KVGenerator{
             docs.add(this.nextUpdate());
             count += 1;
         }
-        System.out.println("docs.size from nextupdatebatch" + docs);
         return docs;
     }
 
