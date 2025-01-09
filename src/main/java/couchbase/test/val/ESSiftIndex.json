@@ -1,28 +1,34 @@
 {
-	"properties": {
-		"brand": {
-			"type": "text",
-			"index": true,
-			"fields": {
-				"keyword": {
-					"type": "keyword",
-					"ignore_above": 256
+	"settings": {
+		"number_of_shards": 5,
+		"number_of_replicas": 0
+	},
+	"mappings": {
+		"properties": {
+			"brand": {
+				"type": "text",
+				"index": true,
+				"fields": {
+					"keyword": {
+						"type": "keyword",
+						"ignore_above": 256
+					}
 				}
+			},
+			"embedding": {
+				"type": "dense_vector",
+				"dims": 128,
+				"index": true,
+				"similarity": "l2_norm",
+				"index_options": {
+					"type": "int8_hnsw",
+					"m": 16,
+					"ef_construction": 100
+				}
+			},
+			"id": {
+				"type": "long"
 			}
-		},
-		"embedding": {
-			"type": "dense_vector",
-			"dims": 128,
-			"index": true,
-			"similarity": "l2_norm",
-			"index_options": {
-				"type": "int8_hnsw",
-				"m": 16,
-				"ef_construction": 100
-			}
-		},
-		"id": {
-			"type": "long"
 		}
 	}
 }

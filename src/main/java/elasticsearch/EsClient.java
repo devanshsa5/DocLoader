@@ -101,14 +101,14 @@ public class EsClient {
 	public Response createESIndex(String indexName, String similarity, JsonObject indexMapping) throws IOException {
 		//create an Index with indexName
 		this.indexName = indexName;
-		Request createIndex = new Request("PUT", "/" + indexName);
-		try {
-			restClient.performRequest(createIndex);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// Request createIndex = new Request("PUT", "/" + indexName);
+		// try {
+		// 	restClient.performRequest(createIndex);
+		// } catch (IOException e) {
+		// 	e.printStackTrace();
+		// }
 
-		String endpoint = "/" + indexName + "/_mapping";
+		String endpoint = "/" + indexName;
 		File f = new File("src/main/java/couchbase/test/val/ESSiftIndex.json");
 		String esIndex = null;
         if (f.exists()){
